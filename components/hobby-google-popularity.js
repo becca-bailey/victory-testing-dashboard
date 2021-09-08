@@ -9,38 +9,15 @@ import {
   VictoryVoronoiContainer,
 } from "victory";
 import {getColorAtIndex} from "../utils/colors";
-
-const query = `
-  query {
-    hobbyGooglePopularity {
-      hobby 
-      values {
-        week 
-        popularity  
-      }
-    }
-  }
-`;
-
-function ConditionalPoint({active, ...rest}) {
-  if (!active) {
-    return null;
-  }
-  return <Point {...rest} />;
-}
+import hobbiesData from "../public/hobbies-json.json";
 
 function CustomTooltip(props) {
   return <VictoryTooltip {...props} />;
 }
 
-function HobbyGooglePopularity() {
-  const [{data, fetching, error}] = useQuery({query});
-
+const HobbyGooglePopularity = ({data = hobbiesData}) => {
   const victoryData = React.useMemo(() => {
-    if (!data) {
-      return [];
-    }
-    return data.hobbyGooglePopularity.map(({hobby, values}, i) => {
+    return Object.entries(data).map(([hobby, values], i) => {
       const coordinates = values.map(({week, popularity}) => {
         return {
           x: parseISO(week),
@@ -54,10 +31,6 @@ function HobbyGooglePopularity() {
       };
     });
   }, [data]);
-
-  if (fetching) {
-    return "Loading...";
-  }
 
   return (
     <div>
@@ -79,6 +52,6 @@ function HobbyGooglePopularity() {
       </VictoryChart>
     </div>
   );
-}
+};
 
 export default HobbyGooglePopularity;
