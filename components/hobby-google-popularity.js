@@ -1,6 +1,5 @@
 import {parseISO} from "date-fns";
 import React from "react";
-import {useQuery} from "urql";
 import {
   Point,
   VictoryChart,
