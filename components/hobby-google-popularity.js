@@ -1,16 +1,13 @@
+import {parseISO} from "date-fns";
 import React from "react";
 import {useQuery} from "urql";
 import {
+  Point,
   VictoryChart,
   VictoryLine,
-  VictoryScatter,
-  VictoryVoronoiContainer,
-  Point,
-  VictoryZoomContainer,
   VictoryTooltip,
-  VictoryBrushLine,
+  VictoryVoronoiContainer,
 } from "victory";
-import {parseISO} from "date-fns";
 import {getColorAtIndex} from "../utils/colors";
 
 const query = `
@@ -38,8 +35,6 @@ function CustomTooltip(props) {
 
 function HobbyGooglePopularity() {
   const [{data, fetching, error}] = useQuery({query});
-  const [activeX, setActiveX] = React.useState();
-  console.log(activeX);
 
   const victoryData = React.useMemo(() => {
     if (!data) {
@@ -54,7 +49,6 @@ function HobbyGooglePopularity() {
         };
       });
       return {
-        hobby,
         color: getColorAtIndex(i),
         coordinates,
       };
@@ -69,17 +63,15 @@ function HobbyGooglePopularity() {
     <div>
       <h2>Interest over time (via Google)</h2>
       <VictoryChart
-        scale={{x: "time"}}
         containerComponent={
           <VictoryVoronoiContainer
             voronoiDimension="x"
             labels={({datum}) => `${datum.hobby}: ${datum.y}`}
             labelComponent={<CustomTooltip />}
-            onActivated={(datum) => setActiveX(datum[0].x)}
           />
         }
       >
-        {victoryData.map(({hobby, color, coordinates}) => {
+        {victoryData.map(({color, coordinates}) => {
           return (
             <VictoryLine data={coordinates} style={{data: {stroke: color}}} />
           );
