@@ -26,7 +26,7 @@ const PopularityVsMedianIncome = ({data = [], color, hobby}) => {
   return (
     <div>
       <h2>Interest in {hobby} by state vs. median household income</h2>
-      <VictoryChart containerComponent={<VictoryVoronoiContainer />}>
+      <VictoryChart animate containerComponent={<VictoryVoronoiContainer />}>
         <VictoryScatter
           style={{data: {fill: color}}}
           data={victoryData}

@@ -17,6 +17,8 @@ import {getColorAtIndex} from "../utils/colors";
 import gardeningByStateData from "../public/data/gardening-by-state.json";
 import sewingByStateData from "../public/data/sewing-by-state.json";
 import bakingByStateData from "../public/data/baking-by-state.json";
+import PopularityOverTimeBar from "../components/popularity-over-time-bar";
+import craftingData2020 from "../public/data/crafting-2020.json";
 
 const Layout = styled.main``;
 
@@ -24,6 +26,7 @@ export default function Home() {
   return (
     <Layout>
       <PopularityOverTime data={hobbiesData} />
+      <PopularityOverTimeBar data={craftingData2020} />
       <PopularityByRegion
         data={knittingData.knitting}
         color={getColorAtIndex(0)}

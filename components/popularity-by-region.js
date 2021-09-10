@@ -22,7 +22,7 @@ const PopularityByRegion = ({data = [], color, hobby, region = "country"}) => {
       <h2>
         Popularity of {hobby} by {region} (9/9/20 - 9/9/21)
       </h2>
-      <VictoryChart containerComponent={<VictoryVoronoiContainer />}>
+      <VictoryChart animate containerComponent={<VictoryVoronoiContainer />}>
         <VictoryBar
           style={{data: {fill: color}}}
           data={victoryData}
