@@ -1,9 +1,7 @@
 import {parseISO} from "date-fns";
 import React from "react";
 import {
-  Point,
   VictoryChart,
-  VictoryGroup,
   VictoryLine,
   VictoryTooltip,
   VictoryVoronoiContainer,
@@ -27,29 +25,40 @@ const PopularityOverTime = ({data}) => {
       return {
         color: getColorAtIndex(i),
         coordinates,
+        id: `line-${i}`,
       };
     });
   }, [data]);
 
   return (
-    <div>
-      <h2>Popularity over time</h2>
-      <VictoryChart
-        containerComponent={
-          <VictoryVoronoiContainer
-            voronoiDimension="x"
-            labels={({datum}) => `${datum.hobby}: ${datum.y}`}
-            labelComponent={<CustomTooltip />}
+    <VictoryChart
+      // theme={{
+      //   axis: {
+      //     style: {
+      //       axisLabel: {
+      //         font: "Urbanist, sans-serif",
+      //       },
+      //     },
+      //   },
+      // }}
+      containerComponent={
+        <VictoryVoronoiContainer
+          voronoiDimension="x"
+          labels={({datum}) => `${datum.hobby}: ${datum.y}`}
+          labelComponent={<CustomTooltip />}
+        />
+      }
+    >
+      {victoryData.map(({color, coordinates, id}) => {
+        return (
+          <VictoryLine
+            key={id}
+            data={coordinates}
+            style={{data: {stroke: color}}}
           />
-        }
-      >
-        {victoryData.map(({color, coordinates}) => {
-          return (
-            <VictoryLine data={coordinates} style={{data: {stroke: color}}} />
-          );
-        })}
-      </VictoryChart>
-    </div>
+        );
+      })}
+    </VictoryChart>
   );
 };
 

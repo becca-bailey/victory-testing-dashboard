@@ -20,12 +20,33 @@ import bakingByStateData from "../public/data/baking-by-state.json";
 import PopularityOverTimeBar from "../components/popularity-over-time-bar";
 import craftingData2020 from "../public/data/crafting-2020.json";
 
-const Layout = styled.main``;
+const Main = styled.main`
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 1200px;
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: auto 15rem;
+  align-items: center;
+`;
 
 export default function Home() {
   return (
-    <Layout>
-      <PopularityOverTime data={hobbiesData} />
+    <Main>
+      <h1>
+        What can Google tell us about hobbies during the pandemic and around the
+        world?
+      </h1>
+      <Grid>
+        <PopularityOverTime data={hobbiesData} />
+        <p>
+          Hobbies like knitting, sewing, baking, and gardening were popular
+          during the pandemic. According to Google search data, some are more
+          popular search terms than others, and most fluctuate seasonally.
+        </p>
+      </Grid>
       <PopularityOverTimeBar data={craftingData2020} />
       <PopularityByRegion
         data={knittingData.knitting}
@@ -85,6 +106,6 @@ export default function Home() {
         data={bakingByStateData.baking}
         hobby="baking"
       />
-    </Layout>
+    </Main>
   );
 }
