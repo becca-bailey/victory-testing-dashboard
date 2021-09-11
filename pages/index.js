@@ -192,14 +192,17 @@ export default function Home() {
       <SplitSection>
         <div>
           <PopularityVsSheep />
-          <p>Is interest in knitting corellated to the number of sheep?</p>
+          <p>
+            Is interest in knitting corellated to the number of sheep? Not as
+            far as I can tell, but they do really like sheep in New Zealand.
+          </p>
         </div>
         <div>
           <h3>Interest in baking vs. the Great British Bake Off in the UK</h3>
           <PopularityOverTime data={britishBakingData} />
           <p>
             Did interest in baking in the UK increase with the popularity of the
-            Great British Bake Off?
+            Great British Bake Off? Unclear, but not impossible!
           </p>
         </div>
       </SplitSection>
