@@ -7,6 +7,7 @@ import {
   VictoryVoronoiContainer,
 } from "victory";
 import {getColorAtIndex} from "../utils/colors";
+import {victoryTheme} from "../utils/theme";
 
 function CustomTooltip(props) {
   return <VictoryTooltip {...props} />;
@@ -32,15 +33,7 @@ const PopularityOverTime = ({data}) => {
 
   return (
     <VictoryChart
-      // theme={{
-      //   axis: {
-      //     style: {
-      //       axisLabel: {
-      //         font: "Urbanist, sans-serif",
-      //       },
-      //     },
-      //   },
-      // }}
+      theme={victoryTheme}
       containerComponent={
         <VictoryVoronoiContainer
           voronoiDimension="x"

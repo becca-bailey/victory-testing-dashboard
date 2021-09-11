@@ -6,6 +6,7 @@ import {
   VictoryVoronoiContainer,
 } from "victory";
 import householdIncomeData from "../public/data/household-income-by-state.json";
+import {victoryTheme} from "../utils/theme";
 
 const PopularityVsMedianIncome = ({data = [], color, hobby}) => {
   const victoryData = React.useMemo(() => {
@@ -25,8 +26,12 @@ const PopularityVsMedianIncome = ({data = [], color, hobby}) => {
 
   return (
     <div>
-      <h2>Interest in {hobby} by state vs. median household income</h2>
-      <VictoryChart animate containerComponent={<VictoryVoronoiContainer />}>
+      <h3>Interest in {hobby} by state vs. median household income</h3>
+      <VictoryChart
+        theme={victoryTheme}
+        animate
+        containerComponent={<VictoryVoronoiContainer />}
+      >
         <VictoryScatter
           style={{data: {fill: color}}}
           data={victoryData}

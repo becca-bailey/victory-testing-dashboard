@@ -6,6 +6,7 @@ import {
   VictoryTooltip,
   VictoryVoronoiContainer,
 } from "victory";
+import {victoryTheme} from "../utils/theme";
 
 const PopularityByRegion = ({data = [], color, hobby, region = "country"}) => {
   const victoryData = React.useMemo(() => {
@@ -19,10 +20,12 @@ const PopularityByRegion = ({data = [], color, hobby, region = "country"}) => {
 
   return (
     <div>
-      <h2>
-        Popularity of {hobby} by {region} (9/9/20 - 9/9/21)
-      </h2>
-      <VictoryChart animate containerComponent={<VictoryVoronoiContainer />}>
+      <h3>{hobby}</h3>
+      <VictoryChart
+        theme={victoryTheme}
+        animate
+        containerComponent={<VictoryVoronoiContainer />}
+      >
         <VictoryBar
           style={{data: {fill: color}}}
           data={victoryData}

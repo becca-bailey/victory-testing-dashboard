@@ -6,9 +6,9 @@ import {
   VictoryTooltip,
   VictoryVoronoiContainer,
   VictoryBar,
-  VictoryHistogram,
 } from "victory";
 import {colorPalette} from "../utils/colors";
+import {victoryTheme} from "../utils/theme";
 
 function CustomTooltip(props) {
   return <VictoryTooltip {...props} />;
@@ -32,9 +32,9 @@ const PopularityOverTimeBar = ({data}) => {
 
   return (
     <div>
-      <h2>Popularity over time</h2>
       <VictoryChart
         animate
+        theme={victoryTheme}
         containerComponent={
           <VictoryVoronoiContainer
             labels={({datum}) => `${datum.hobby}: ${datum.y}`}

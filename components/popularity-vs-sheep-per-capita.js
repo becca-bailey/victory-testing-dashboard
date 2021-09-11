@@ -8,6 +8,7 @@ import {
 import knittingData from "../public/data/knitting-by-country.json";
 import populationData from "../public/data/2019-population-json.json";
 import {getColorAtIndex} from "../utils/colors";
+import {victoryTheme} from "../utils/theme";
 
 const chartData = knittingData.knitting;
 
@@ -29,8 +30,12 @@ const KnittingPopularityVsSheepPerCapita = ({data = chartData}) => {
 
   return (
     <div>
-      <h2>Interest in knitting vs. sheep per capita in 2019</h2>
-      <VictoryChart animate containerComponent={<VictoryVoronoiContainer />}>
+      <h3>Interest in knitting vs. sheep per capita in 2019</h3>
+      <VictoryChart
+        theme={victoryTheme}
+        animate
+        containerComponent={<VictoryVoronoiContainer />}
+      >
         <VictoryScatter
           style={{data: {fill: getColorAtIndex(1)}}}
           data={victoryData}
