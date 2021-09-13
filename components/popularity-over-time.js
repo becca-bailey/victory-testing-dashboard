@@ -1,4 +1,4 @@
-import {parseISO} from "date-fns";
+import {parseISO, format} from "date-fns";
 import React from "react";
 import {
   VictoryChart,
@@ -9,8 +9,10 @@ import {
 import {getColorAtIndex} from "../utils/colors";
 import {victoryTheme} from "../utils/theme";
 
-function CustomTooltip(props) {
-  return <VictoryTooltip {...props} />;
+function CustomTooltip({text, datum, ...rest}) {
+  const formattedDate = format(datum.x, "MMM d yyyy");
+  const modifiedText = [`Week of ${formattedDate}`, ...text];
+  return <VictoryTooltip datum={datum} text={modifiedText} {...rest} />;
 }
 
 const PopularityOverTime = ({data}) => {
@@ -37,7 +39,7 @@ const PopularityOverTime = ({data}) => {
       containerComponent={
         <VictoryVoronoiContainer
           voronoiDimension="x"
-          labels={({datum}) => `${datum.hobby}: ${datum.y}`}
+          labels={({datum}) => [`${datum.hobby}: ${datum.y}`]}
           labelComponent={<CustomTooltip />}
         />
       }

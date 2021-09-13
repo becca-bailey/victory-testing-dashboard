@@ -137,7 +137,7 @@ export default function Home() {
         <SplitSection>
           <p>
             In the United States, knitting is most popular in the northeast and
-            western states, while crochet is most popular in the south.
+            western states.
           </p>
           <PopularityByRegion
             data={knittingByStateData.knitting}
@@ -206,6 +206,29 @@ export default function Home() {
           </p>
         </div>
       </SplitSection>
+      <Section>
+        <h4>Sources</h4>
+        <ol>
+          <li>
+            <a href="https://trends.google.com/trends/">Google Trends</a>
+          </li>
+          <li>
+            <a href="https://www.nationmaster.com/nmx/ranking/number-of-sheep">
+              NationMaster - Number of Sheep
+            </a>
+          </li>
+          <li>
+            <a href="https://data.worldbank.org/indicator/SP.POP.TOTL?end=2019&start=2019&view=bar">
+              The World Bank - Population
+            </a>
+          </li>
+          <li>
+            <a href="https://worldpopulationreview.com/state-rankings/median-household-income-by-state">
+              World Population Review - Median Income by State
+            </a>
+          </li>
+        </ol>
+      </Section>
     </Main>
   );
 }
