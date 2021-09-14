@@ -8,7 +8,13 @@ import {
 } from "victory";
 import {victoryTheme} from "../utils/theme";
 
-const PopularityByRegion = ({data = [], color, hobby, region = "country"}) => {
+const PopularityByRegion = ({
+  data = [],
+  color,
+  hobby,
+  region = "country",
+  animate = false,
+}) => {
   const victoryData = React.useMemo(() => {
     return data.map((d) => {
       return {
@@ -23,7 +29,7 @@ const PopularityByRegion = ({data = [], color, hobby, region = "country"}) => {
       <h3>{hobby}</h3>
       <VictoryChart
         theme={victoryTheme}
-        animate
+        animate={animate}
         containerComponent={<VictoryVoronoiContainer />}
       >
         <VictoryBar

@@ -48,6 +48,8 @@ const SplitSection = styled(Grid)`
   grid-template-columns: repeat(2, 1fr);
 `;
 
+const animate = true;
+
 export default function Home() {
   return (
     <Main>
@@ -56,7 +58,7 @@ export default function Home() {
         world?
       </h1>
       <LeftSection>
-        <PopularityOverTime data={hobbiesData} />
+        <PopularityOverTime data={hobbiesData} animate={animate} />
         <p>
           Hobbies like knitting, sewing, baking, and gardening were popular
           during the pandemic. According to Google search data, some are more
@@ -68,7 +70,7 @@ export default function Home() {
           If we zoom in on 2020 and stack each hobby, we can see the impact of
           the pandemic on Google searches in March of 2020.
         </p>
-        <PopularityOverTimeBar data={craftingData2020} />
+        <PopularityOverTimeBar data={craftingData2020} animate={animate} />
       </RightSection>
       <Section>
         <h2>Where in the world are each of these hobbies the most popular?</h2>
@@ -77,6 +79,7 @@ export default function Home() {
             data={knittingData.knitting}
             color={getColorAtIndex(0)}
             hobby="knitting"
+            animate={animate}
           />
           <p>
             Knitting is really popular in Iceland and New Zealand. It makes
@@ -89,6 +92,7 @@ export default function Home() {
             data={crochetData.crochet}
             color={getColorAtIndex(1)}
             hobby="crochet"
+            animate={animate}
           />
           <p>
             Crochet is popular in South American countries like Bolivia, Chile,
@@ -100,6 +104,7 @@ export default function Home() {
             data={sewingData.sewing}
             color={getColorAtIndex(2)}
             hobby="sewing"
+            animate={animate}
           />
           <p>
             Sewing is popular in many countries around the world, including the
@@ -113,6 +118,7 @@ export default function Home() {
             data={bakingData.baking}
             color={getColorAtIndex(3)}
             hobby="baking"
+            animate={animate}
           />
           <p>
             The top five countries that are searching for baking on Google are
@@ -125,6 +131,7 @@ export default function Home() {
             data={gardeningData.gardening}
             color={getColorAtIndex(4)}
             hobby="gardening"
+            animate={animate}
           />
           <p>
             Many of the countries on the list have good climates for gardening,
@@ -144,6 +151,7 @@ export default function Home() {
             color={getColorAtIndex(1)}
             hobby="knitting"
             region="state"
+            animate={animate}
           />
         </SplitSection>
         <p>
@@ -157,11 +165,13 @@ export default function Home() {
             color={getColorAtIndex(0)}
             data={knittingByStateData.knitting}
             hobby="knitting"
+            animate={animate}
           />
           <PopularityVsMedianIncome
             color={getColorAtIndex(4)}
             data={bakingByStateData.baking}
             hobby="baking"
+            animate={animate}
           />
         </SplitSection>
         <SplitSection>
@@ -169,6 +179,7 @@ export default function Home() {
             color={getColorAtIndex(1)}
             data={crochetByStateData.crochet}
             hobby="crochet"
+            animate={animate}
           />
           <p>Interestingly—crochet seems to go in the opposite direction.</p>
         </SplitSection>
@@ -178,11 +189,13 @@ export default function Home() {
             color={getColorAtIndex(2)}
             data={gardeningByStateData.gardening}
             hobby="gardening"
+            animate={animate}
           />
           <PopularityVsMedianIncome
             color={getColorAtIndex(3)}
             data={sewingByStateData.sewing}
             hobby="sewing"
+            animate={animate}
           />
         </SplitSection>
       </Section>

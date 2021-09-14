@@ -12,7 +12,10 @@ import {victoryTheme} from "../utils/theme";
 
 const chartData = knittingData.knitting;
 
-const KnittingPopularityVsSheepPerCapita = ({data = chartData}) => {
+const KnittingPopularityVsSheepPerCapita = ({
+  data = chartData,
+  animate = false,
+}) => {
   const victoryData = React.useMemo(() => {
     return data
       .map(({country, popularity, sheepPopulation}) => {
@@ -33,7 +36,7 @@ const KnittingPopularityVsSheepPerCapita = ({data = chartData}) => {
       <h3>Interest in knitting vs. sheep per capita in 2019</h3>
       <VictoryChart
         theme={victoryTheme}
-        animate
+        animate={animate}
         containerComponent={<VictoryVoronoiContainer />}
       >
         <VictoryScatter

@@ -16,7 +16,7 @@ function CustomTooltip({text, datum, ...rest}) {
   return <VictoryTooltip datum={datum} text={modifiedText} {...rest} />;
 }
 
-const PopularityOverTimeBar = ({data}) => {
+const PopularityOverTimeBar = ({data, animate = false}) => {
   const victoryData = React.useMemo(() => {
     return Object.entries(data).map(([hobby, values], i) => {
       const coordinates = values.map(({week, popularity}) => {
@@ -35,7 +35,7 @@ const PopularityOverTimeBar = ({data}) => {
   return (
     <div>
       <VictoryChart
-        animate
+        animate={animate}
         theme={victoryTheme}
         containerComponent={
           <VictoryVoronoiContainer

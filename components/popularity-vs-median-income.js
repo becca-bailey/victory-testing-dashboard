@@ -8,7 +8,12 @@ import {
 import householdIncomeData from "../public/data/household-income-by-state.json";
 import {victoryTheme} from "../utils/theme";
 
-const PopularityVsMedianIncome = ({data = [], color, hobby}) => {
+const PopularityVsMedianIncome = ({
+  data = [],
+  color,
+  hobby,
+  animate = false,
+}) => {
   const victoryData = React.useMemo(() => {
     return data
       .map(({state, popularity}) => {
@@ -29,7 +34,7 @@ const PopularityVsMedianIncome = ({data = [], color, hobby}) => {
       <h3>Interest in {hobby} by state vs. median household income</h3>
       <VictoryChart
         theme={victoryTheme}
-        animate
+        animate={animate}
         containerComponent={<VictoryVoronoiContainer />}
       >
         <VictoryScatter
