@@ -11,10 +11,12 @@ const populationData = jsonData.populationData;
 
 const Main = styled.main``;
 
-const Title = styled.h1`
+const Intro = styled.section`
   padding: 3rem;
   margin: 0 2rem;
 `;
+
+const Title = styled.h1``;
 
 const Text = styled.text`
   font-family: Urbanist, sans-serif;
@@ -396,7 +398,20 @@ const InteractiveCanvasExample = ({
 
   return (
     <Main>
-      <Title>World Population 1960-2019</Title>
+      <Intro>
+        <Title>World Population 1960-2019</Title>
+        <p>
+          This example uses canvas, d3, and SVG to render a chart of world
+          population by country over the past 60 years. The axis and labels are
+          SVG while data is painted with overlapping canvas containers. The
+          lines and points are animated with d3.timer() and d3.interpolate().
+        </p>
+        <p>
+          Hover over each line to see the population for each year, and click to
+          isolate data for a single country.
+        </p>
+      </Intro>
+
       <Lines
         nextData={nextLineData}
         previousData={previousLineData}
