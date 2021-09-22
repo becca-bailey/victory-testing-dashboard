@@ -22,7 +22,7 @@ const PopularityByRegion = ({
         y: d.popularity,
       };
     });
-  }, [data]);
+  }, [data, region]);
 
   return (
     <div>

@@ -108,9 +108,9 @@ export default function Home() {
           />
           <p>
             Sewing is popular in many countries around the world, including the
-            United Kindgom, Nigeria, Ghana, Australia, and New Zealand. It's
-            interesting that these countries are all members of the British
-            Commonwealth!
+            United Kindgom, Nigeria, Ghana, Australia, and New Zealand.
+            It&apos;s interesting that these countries are all members of the
+            British Commonwealth!
           </p>
         </SplitSection>
         <SplitSection>
@@ -183,7 +183,7 @@ export default function Home() {
           />
           <p>Interestingly—crochet seems to go in the opposite direction.</p>
         </SplitSection>
-        <p>Gardening and sewing didn't show any noticeable trends.</p>
+        <p>Gardening and sewing didn&apos;t show any noticeable trends.</p>
         <SplitSection>
           <PopularityVsMedianIncome
             color={getColorAtIndex(2)}
