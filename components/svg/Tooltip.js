@@ -9,7 +9,7 @@ const TooltipContainer = styled.div`
 `;
 export function Tooltip({x, y, width, height, children, canvasWidth, margin}) {
   let alignLeft = false;
-  if (canvasWidth - width + margin.right < x) {
+  if (canvasWidth - width < x) {
     alignLeft = true;
   }
   return (

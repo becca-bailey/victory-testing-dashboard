@@ -48,8 +48,9 @@ a {
 .tooltip {
   background-color: white;
   padding: 0.5rem;
-  border: 1px solid black;
+  border: 2px solid gray;
   text-align: left;
+  border-radius: 4px;
 }
 
 .chart p {
@@ -57,4 +58,8 @@ a {
   margin: 0;
   border: 0;
   font-weight: 100;
+}
+
+.chart .bold {
+  font-weight: 400;
 }

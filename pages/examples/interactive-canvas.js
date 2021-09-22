@@ -1,11 +1,11 @@
 import * as d3 from "d3";
-import {isEqual} from "lodash";
+import {get} from "lodash";
 import React from "react";
+import styled from "styled-components";
 import {Tooltip} from "../../components/svg/Tooltip";
 import {XAxis} from "../../components/svg/XAxis";
 import {YAxis} from "../../components/svg/YAxis";
 import jsonData from "../../public/data/population.json";
-import styled from "styled-components";
 
 const populationData = jsonData.populationData;
 
@@ -26,30 +26,31 @@ const defaultMargin = {
   left: 70,
   right: 20,
   top: 20,
-  bottom: 60,
+  bottom: 70,
 };
 const defaultLineWidth = 2;
 const defaultPointSize = 3;
 const animationDuration = 200;
 const lineColor = "#D1DCE5";
 
-export const usePreviousData = (data) => {
+const usePreviousData = (data, defaultValue = {}) => {
   const ref = React.useRef();
   React.useEffect(() => {
     ref.current = data;
   });
-  return ref.current || {};
+  return ref.current || defaultValue;
 };
 
 const Lines = ({
-  canvasRef,
   nextData,
   lineWidth = defaultLineWidth,
   previousData,
   width,
   height,
+  margin,
   duration = animationDuration,
 }) => {
+  const canvasRef = React.useRef();
   const [data, setData] = React.useState(nextData);
 
   const interpolator = React.useMemo(() => {
@@ -76,23 +77,21 @@ const Lines = ({
   React.useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
 
-    if (!!previousData && !isEqual(previousData, nextData)) {
-      const timer = d3.timer((elapsed) => {
-        ctx.clearRect(0, 0, width, height);
-        Object.values(data).forEach((d) => {
-          draw(ctx, d);
-        });
-
-        const step = duration ? elapsed / duration : 1;
-        if (elapsed > duration) {
-          timer.stop();
-          setData(interpolator(1));
-        }
-        setData(interpolator(step));
+    const timer = d3.timer((elapsed) => {
+      ctx.clearRect(0, 0, width, height);
+      Object.values(data).forEach((d) => {
+        draw(ctx, d);
       });
 
-      return () => timer.stop();
-    }
+      const step = duration ? elapsed / duration : 1;
+      if (elapsed > duration) {
+        timer.stop();
+        setData(interpolator(1));
+      }
+      setData(interpolator(step));
+    });
+
+    return () => timer.stop();
   }, [
     setData,
     canvasRef,
@@ -106,7 +105,112 @@ const Lines = ({
     width,
   ]);
 
-  return null;
+  return (
+    <canvas
+      className="chart"
+      height={height}
+      width={width}
+      style={{
+        marginLeft: margin.left,
+        marginRight: margin.right,
+        marginTop: margin.top,
+        marginBottom: margin.bottom,
+      }}
+      ref={canvasRef}
+    />
+  );
+};
+
+const Points = ({
+  nextData,
+  pointSize = defaultPointSize,
+  previousData,
+  width,
+  height,
+  margin,
+  duration = animationDuration,
+}) => {
+  const canvasRef = React.useRef();
+  const [data, setData] = React.useState(nextData);
+
+  const interpolator = React.useMemo(() => {
+    return d3.interpolate(previousData, nextData);
+  }, [previousData, nextData]);
+
+  const draw = React.useCallback(
+    (ctx, {x, y, color = "black"}) => {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x, y, pointSize, 0, 2 * Math.PI);
+      ctx.fill();
+    },
+    [pointSize]
+  );
+
+  const drawLine = React.useCallback(
+    (ctx, x) => {
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x, margin.top);
+      ctx.lineTo(x, height - margin.bottom);
+      ctx.closePath();
+      ctx.stroke();
+    },
+    [height, margin]
+  );
+
+  React.useLayoutEffect(() => {
+    const ctx = canvasRef.current.getContext("2d");
+
+    const timer = d3.timer((elapsed) => {
+      ctx.clearRect(0, 0, width, height);
+
+      const x = get(Object.values(data), "[0][0].x");
+      if (x) {
+        drawLine(ctx, x);
+      }
+      Object.values(data).forEach((points) => {
+        points.forEach((d) => draw(ctx, d));
+      });
+
+      const step = duration ? elapsed / duration : 1;
+      if (elapsed > duration) {
+        timer.stop();
+        setData(interpolator(1));
+      }
+      setData(interpolator(step));
+    });
+
+    return () => timer.stop();
+  }, [
+    setData,
+    canvasRef,
+    data,
+    draw,
+    drawLine,
+    duration,
+    interpolator,
+    previousData,
+    nextData,
+    height,
+    width,
+  ]);
+
+  return (
+    <canvas
+      className="chart"
+      height={height}
+      width={width}
+      style={{
+        marginLeft: margin.left,
+        marginRight: margin.right,
+        marginTop: margin.top,
+        marginBottom: margin.bottom,
+      }}
+      ref={canvasRef}
+    />
+  );
 };
 
 const InteractiveCanvasExample = ({
@@ -115,8 +219,6 @@ const InteractiveCanvasExample = ({
   data = populationData,
   margin = defaultMargin,
 }) => {
-  const linesCanvasRef = React.useRef();
-  const pointsCanvasRef = React.useRef();
   const [activePoint, setActivePoint] = React.useState();
   const [isolatedCountry, setIsolatedCountry] = React.useState();
 
@@ -222,7 +324,7 @@ const InteractiveCanvasExample = ({
     }
   }, [activePoint, setIsolatedCountry, isolatedCountry]);
 
-  const nextData = React.useMemo(() => {
+  const nextLineData = React.useMemo(() => {
     const scale = (data, additionalData = {}) => {
       const scaleX = d3
         .scaleLinear()
@@ -254,6 +356,10 @@ const InteractiveCanvasExample = ({
   }, [filteredData, height, width, margin, allValues, getColor]);
 
   const nextPointsData = React.useMemo(() => {
+    if (!activePoint) {
+      return {};
+    }
+
     const scale = (data, additionalData = {}) => {
       const scaleX = d3
         .scaleLinear()
@@ -285,16 +391,34 @@ const InteractiveCanvasExample = ({
     }, {});
   }, [filteredData, height, width, margin, activePoint, allValues, getColor]);
 
-  const previousData = usePreviousData(nextData);
+  const previousLineData = usePreviousData(nextLineData);
+  const previousPointsData = usePreviousData(nextPointsData);
 
   return (
     <Main>
       <Title>World Population 1960-2019</Title>
+      <Lines
+        nextData={nextLineData}
+        previousData={previousLineData}
+        width={width}
+        height={height}
+        margin={margin}
+      />
+      <Points
+        nextData={nextPointsData}
+        previousData={previousPointsData}
+        width={width}
+        height={height}
+        margin={margin}
+      />
       <svg
         className="chart"
         height={height}
         width={width}
         transform={`translate(${margin.left}, ${margin.top})`}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        onClick={handleClick}
       >
         <Text
           x={(height / 2 - margin.top / 2) * -1}
@@ -311,57 +435,14 @@ const InteractiveCanvasExample = ({
         >
           Year
         </Text>
-        {activePoint && (
-          <line
-            stroke={lineColor}
-            strokeWidth={2}
-            x1={activePoint.x}
-            x2={activePoint.x}
-            y1={margin.top}
-            y2={height - margin.bottom}
-          />
-        )}
         <XAxis scale={scaleX} margin={margin} height={height} />
         <YAxis scale={scaleY} margin={margin} />
-      </svg>
-      <canvas
-        ref={linesCanvasRef}
-        width={width}
-        height={height}
-        style={{
-          marginLeft: margin.left,
-          marginRight: margin.right,
-          marginTop: margin.top,
-          marginBottom: margin.bottom,
-        }}
-      />
-      <canvas
-        className="chart"
-        height={height}
-        width={width}
-        style={{
-          marginLeft: margin.left,
-          marginRight: margin.right,
-          marginTop: margin.top,
-          marginBottom: margin.bottom,
-        }}
-        ref={pointsCanvasRef}
-      />
-      <svg
-        className="chart"
-        height={height}
-        width={width}
-        transform={`translate(${margin.left}, ${margin.top})`}
-        onMouseMove={onMouseMove}
-        onMouseLeave={onMouseLeave}
-        onClick={handleClick}
-      >
         {activePoint && (
           <Tooltip
             x={activePoint.x}
             y={activePoint.y}
-            width={200}
-            height={100}
+            width={250}
+            height={200}
             canvasWidth={width}
             margin={margin}
           >
@@ -372,13 +453,6 @@ const InteractiveCanvasExample = ({
           </Tooltip>
         )}
       </svg>
-      <Lines
-        canvasRef={linesCanvasRef}
-        nextData={nextData}
-        previousData={previousData}
-        width={width}
-        height={height}
-      />
     </Main>
   );
 };
