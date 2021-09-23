@@ -43,22 +43,22 @@ const Lines = ({nextData, previousData, width, height, margin}) => {
   const workerRef = React.useRef();
 
   React.useEffect(() => {
-    workerRef.current = new Worker(new URL("../../worker.js", import.meta.url));
+    workerRef.current = new Worker(
+      new URL("../../lines.worker.js", import.meta.url)
+    );
     workerRef.current.onmessage = (evt) => console.log(evt.data);
 
     const offscreen = canvasRef.current.transferControlToOffscreen();
-    workerRef.current.postMessage(
-      {linesCanvas: offscreen, nextLinesData: nextData},
-      [offscreen]
-    );
+    workerRef.current.postMessage({canvas: offscreen, nextData}, [offscreen]);
 
     return () => workerRef.current.terminate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
     workerRef.current.postMessage({
-      nextLinesData: nextData,
-      previousLinesData: previousData,
+      nextData,
+      previousData,
     });
   }, [nextData, previousData]);
 
@@ -83,22 +83,22 @@ const Points = ({nextData, previousData, width, height, margin}) => {
   const workerRef = React.useRef();
 
   React.useEffect(() => {
-    workerRef.current = new Worker(new URL("../../worker.js", import.meta.url));
+    workerRef.current = new Worker(
+      new URL("../../points.worker.js", import.meta.url)
+    );
     workerRef.current.onmessage = (evt) => console.log(evt.data);
 
     const offscreen = canvasRef.current.transferControlToOffscreen();
-    workerRef.current.postMessage(
-      {pointsCanvas: offscreen, nextPointsData: nextData},
-      [offscreen]
-    );
+    workerRef.current.postMessage({canvas: offscreen, nextData}, [offscreen]);
 
     return () => workerRef.current.terminate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
     workerRef.current.postMessage({
-      nextPointsData: nextData,
-      previousPointsData: previousData,
+      nextData,
+      previousData,
     });
   }, [nextData, previousData]);
 
