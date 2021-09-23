@@ -1,4 +1,5 @@
-import * as d3 from "d3";
+import * as d3Timer from "d3-timer";
+import * as d3Interpolate from "d3-interpolate";
 
 const defaultWidth = 800;
 const defaultHeight = 600;
@@ -44,8 +45,8 @@ addEventListener("message", (event) => {
   }
 
   if (!!nextData && !!ctx) {
-    const interpolator = d3.interpolate(previousData, nextData);
-    const timer = d3.timer((elapsed) => {
+    const interpolator = d3Interpolate.interpolate(previousData, nextData);
+    const timer = d3Timer.timer((elapsed) => {
       const step = duration ? elapsed / duration : 1;
       if (elapsed > duration) {
         timer.stop();

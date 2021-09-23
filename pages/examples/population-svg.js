@@ -12,8 +12,6 @@ const populationData = jsonData.populationData.map(({country, values}) => ({
   values: values.filter(({value}) => !!value),
 }));
 
-console.log(populationData);
-
 const Main = styled.main``;
 
 const Intro = styled.section`
