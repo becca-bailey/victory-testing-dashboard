@@ -4,7 +4,7 @@ import React from "react";
 export function XAxis({scale, height, margin}) {
   const xAxisRef = React.useRef();
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const xAxis = d3.select(xAxisRef.current);
     xAxis.select("g").remove();
     const axisGenerator = d3.axisBottom(scale).tickFormat((value) => value);

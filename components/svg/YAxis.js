@@ -14,7 +14,7 @@ function formatPopulation(value) {
 export function YAxis({scale, height, margin}) {
   const yAxisRef = React.useRef();
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const yAxis = d3.select(yAxisRef.current);
     yAxis.select("g").remove();
     const axisGenerator = d3.axisLeft(scale).tickFormat(formatPopulation);

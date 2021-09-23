@@ -32,7 +32,7 @@ const defaultMargin = {
 };
 const defaultLineWidth = 2;
 const defaultPointSize = 3;
-const animationDuration = 200;
+const animationDuration = 100;
 const lineColor = "#D1DCE5";
 
 const usePreviousData = (data, defaultValue = {}) => {
@@ -162,7 +162,7 @@ const Points = ({
     [height, margin]
   );
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
 
     const timer = d3.timer((elapsed) => {

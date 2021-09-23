@@ -128,7 +128,7 @@ const Points = ({
     return d3.interpolate(previousData, nextData);
   }, [previousData, nextData]);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const timer = d3.timer((elapsed) => {
       const step = duration ? elapsed / duration : 1;
       if (elapsed > duration) {
