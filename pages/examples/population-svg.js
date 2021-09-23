@@ -174,7 +174,7 @@ const Points = ({
   );
 };
 
-const SVGExample = ({
+const PopulationSVG = ({
   width = defaultWidth,
   height = defaultHeight,
   data = populationData,
@@ -360,10 +360,9 @@ const SVGExample = ({
       <Intro>
         <Title>World Population 1960-2019</Title>
         <p>
-          This example uses canvas, d3, and SVG to render a chart of world
-          population by country over the past 60 years. The axis and labels are
-          SVG while data is painted with overlapping canvas containers. The
-          lines and points are animated with d3.timer() and d3.interpolate().
+          This example uses d3 and SVG render a chart of world population by
+          country over the past 60 years. The lines and points are animated with
+          d3.timer() and d3.interpolate().
         </p>
         <p>
           Hover over each line to see the population for each year, and click to
@@ -431,4 +430,4 @@ const SVGExample = ({
   );
 };
 
-export default SVGExample;
+export default PopulationSVG;
