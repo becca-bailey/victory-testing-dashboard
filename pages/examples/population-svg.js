@@ -116,6 +116,7 @@ const Points = ({
   height,
   margin,
   duration = animationDuration,
+  activePoint,
 }) => {
   const canvasRef = React.useRef();
   const [data, setData] = React.useState(nextData);
@@ -168,6 +169,21 @@ const Points = ({
           );
         });
       })}
+      {activePoint && (
+        <Tooltip
+          x={x}
+          y={activePoint.y}
+          width={250}
+          height={200}
+          canvasWidth={width}
+          margin={margin}
+        >
+          <p className="bold">{activePoint.country}</p>
+          <p>
+            {activePoint.year} - {activePoint.value}
+          </p>
+        </Tooltip>
+      )}
     </g>
   );
 };
@@ -187,54 +203,47 @@ const PopulationSVG = ({
       : data;
   }, [data, isolatedCountry]);
 
-  const allValues = React.useMemo(() => {
-    const getAllValues = (data) => {
-      return data.reduce((all, {values}) => {
-        return [...all, ...values.map(({value}) => value)];
-      }, []);
-    };
-    return getAllValues(filteredData);
+  const flattenedData = React.useMemo(() => {
+    return filteredData.reduce((all, {country, values}) => {
+      return [...all, ...values.map((v) => ({...v, country}))];
+    }, []);
   }, [filteredData]);
 
   const getColor = React.useCallback(
     (values) => {
       const colorScale = d3
         .scaleSequential()
-        .domain([0, d3.max(allValues)])
+        .domain(d3.extent(flattenedData, (d) => d.value))
         .interpolator(d3.interpolateRainbow);
 
       const mean = d3.mean(values.map(({value}) => value));
       return colorScale(mean);
     },
-    [allValues]
+    [flattenedData]
   );
 
-  const scaleX = d3
-    .scaleLinear()
-    .domain([1960, 2019])
-    .range([margin.left, width - margin.right])
-    .nice();
-
-  const scaleY = d3
-    .scaleLinear()
-    .domain(d3.extent(allValues))
-    .range([height - margin.bottom, margin.top])
-    .nice();
-
-  const scale = React.useCallback(
-    (data, additionalData = {}) => {
-      const scaleX = d3
+  const scaleX = React.useMemo(
+    () =>
+      d3
         .scaleLinear()
         .domain([1960, 2019])
         .range([margin.left, width - margin.right])
-        .nice();
+        .nice(),
+    [margin, width]
+  );
 
-      const scaleY = d3
+  const scaleY = React.useMemo(
+    () =>
+      d3
         .scaleLinear()
-        .domain(d3.extent(allValues))
+        .domain(d3.extent(flattenedData, (d) => d.value))
         .range([height - margin.bottom, margin.top])
-        .nice();
+        .nice(),
+    [margin, height, flattenedData]
+  );
 
+  const scale = React.useCallback(
+    (data, additionalData = {}) => {
       return data.map(({year, value}) => ({
         x: scaleX(year),
         y: scaleY(value),
@@ -243,22 +252,16 @@ const PopulationSVG = ({
         ...additionalData,
       }));
     },
-    [allValues, width, height, margin]
+    [scaleX, scaleY]
   );
-
-  const flattenedData = React.useMemo(() => {
-    return filteredData.reduce((flattened, {country, values}) => {
-      return [...flattened, ...scale(values, {country})];
-    }, []);
-  }, [filteredData, scale]);
 
   const delaunay = React.useMemo(() => {
     return d3.Delaunay.from(
       flattenedData,
-      (d) => d.x,
-      (d) => d.y
+      (d) => scaleX(d.year),
+      (d) => scaleY(d.value)
     );
-  }, [flattenedData]);
+  }, [flattenedData, scaleX, scaleY]);
 
   const onMouseMove = React.useCallback(
     (event) => {
@@ -284,62 +287,18 @@ const PopulationSVG = ({
   }, [activePoint, setIsolatedCountry, isolatedCountry]);
 
   const nextLineData = React.useMemo(() => {
-    const scale = (data, additionalData = {}) => {
-      const scaleX = d3
-        .scaleLinear()
-        .domain([1960, 2019])
-        .range([margin.left, width - margin.right])
-        .nice();
-
-      const scaleY = d3
-        .scaleLinear()
-        .domain(d3.extent(allValues))
-        .range([height - margin.bottom, margin.top])
-        .nice();
-
-      return data.map(({year, value}) => ({
-        x: scaleX(year),
-        y: scaleY(value),
-        year,
-        value,
-        ...additionalData,
-      }));
-    };
-
     return filteredData.reduce((d, {country, values}) => {
       return {
         ...d,
         [country]: scale(values, {color: getColor(values)}),
       };
     }, {});
-  }, [filteredData, height, width, margin, allValues, getColor]);
+  }, [filteredData, getColor, scale]);
 
   const nextPointsData = React.useMemo(() => {
     if (!activePoint) {
       return {};
     }
-
-    const scale = (data, additionalData = {}) => {
-      const scaleX = d3
-        .scaleLinear()
-        .domain([1960, 2019])
-        .range([margin.left, width - margin.right])
-        .nice();
-
-      const scaleY = d3
-        .scaleLinear()
-        .domain(d3.extent(allValues))
-        .range([height - margin.bottom, margin.top])
-        .nice();
-
-      return data.map(({year, value}) => ({
-        x: scaleX(year),
-        y: scaleY(value),
-        year,
-        value,
-        ...additionalData,
-      }));
-    };
 
     return filteredData.reduce((d, {country, values}) => {
       const activeValues = values.filter(({year}) => year === activePoint.year);
@@ -348,7 +307,7 @@ const PopulationSVG = ({
         [country]: scale(activeValues, {color: getColor(values)}),
       };
     }, {});
-  }, [filteredData, height, width, margin, activePoint, allValues, getColor]);
+  }, [filteredData, activePoint, getColor, scale]);
 
   const previousLineData = usePreviousData(nextLineData);
   const previousPointsData = usePreviousData(nextPointsData);
@@ -407,22 +366,14 @@ const PopulationSVG = ({
           width={width}
           height={height}
           margin={margin}
+          activePoint={
+            activePoint && {
+              ...activePoint,
+              x: scaleX(activePoint.year),
+              y: scaleY(activePoint.value),
+            }
+          }
         />
-        {activePoint && (
-          <Tooltip
-            x={activePoint.x}
-            y={activePoint.y}
-            width={250}
-            height={200}
-            canvasWidth={width}
-            margin={margin}
-          >
-            <p className="bold">{activePoint.country}</p>
-            <p>
-              {activePoint.year} - {activePoint.value}
-            </p>
-          </Tooltip>
-        )}
       </svg>
     </Main>
   );
