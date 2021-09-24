@@ -236,17 +236,21 @@ const PopulationCanvas = ({
     }, []);
   }, [filteredData]);
 
-  const getColor = React.useCallback(
-    (values) => {
-      const colorScale = d3
+  const colorScale = React.useMemo(
+    () =>
+      d3
         .scaleSequential()
         .domain(d3.extent(flattenedData, (d) => d.value))
-        .interpolator(d3.interpolateRainbow);
+        .interpolator(d3.interpolateRainbow),
+    [flattenedData]
+  );
 
+  const getColor = React.useCallback(
+    (values) => {
       const mean = d3.mean(values.map(({value}) => value));
       return colorScale(mean);
     },
-    [flattenedData]
+    [colorScale]
   );
 
   const scaleX = React.useMemo(
@@ -315,10 +319,8 @@ const PopulationCanvas = ({
 
   const nextLineData = React.useMemo(() => {
     return filteredData.reduce((d, {country, values}) => {
-      return {
-        ...d,
-        [country]: scale(values, {color: getColor(values)}),
-      };
+      d[country] = scale(values, {color: getColor(values)});
+      return d;
     }, {});
   }, [filteredData, getColor, scale]);
 
@@ -329,10 +331,8 @@ const PopulationCanvas = ({
 
     return filteredData.reduce((d, {country, values}) => {
       const activeValues = values.filter(({year}) => year === activePoint.year);
-      return {
-        ...d,
-        [country]: scale(activeValues, {color: getColor(values)}),
-      };
+      d[country] = scale(activeValues, {color: getColor(values)});
+      return d;
     }, {});
   }, [filteredData, activePoint, getColor, scale]);
 
