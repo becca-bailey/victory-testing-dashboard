@@ -5,10 +5,10 @@ import {
   VictoryLine,
   VictoryTooltip,
   VictoryVoronoiContainer,
-  VictoryGroup
+  VictoryGroup,
 } from "victory";
-import {getColorAtIndex} from "../utils/colors";
-import {victoryTheme} from "../utils/theme";
+import {getColorAtIndex} from "../../utils/colors";
+import {victoryTheme} from "../../utils/theme";
 
 function CustomTooltip({text, datum, ...rest}) {
   const formattedDate = format(datum.x, "MMM d yyyy");

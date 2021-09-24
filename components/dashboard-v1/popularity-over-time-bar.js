@@ -7,8 +7,8 @@ import {
   VictoryVoronoiContainer,
   VictoryBar,
 } from "victory";
-import {colorPalette} from "../utils/colors";
-import {victoryTheme} from "../utils/theme";
+import {colorPalette} from "../../utils/colors";
+import {victoryTheme} from "../../utils/theme";
 
 function CustomTooltip({text, datum, ...rest}) {
   const formattedDate = format(datum.x, "MMM d yyyy");

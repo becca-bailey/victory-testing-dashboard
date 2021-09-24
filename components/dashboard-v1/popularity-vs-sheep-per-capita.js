@@ -5,10 +5,10 @@ import {
   VictoryTooltip,
   VictoryVoronoiContainer,
 } from "victory";
-import knittingData from "../public/data/knitting-by-country.json";
-import populationData from "../public/data/2019-population-json.json";
-import {getColorAtIndex} from "../utils/colors";
-import {victoryTheme} from "../utils/theme";
+import knittingData from "../../public/data/knitting-by-country.json";
+import populationData from "../../public/data/2019-population-json.json";
+import {getColorAtIndex} from "../../utils/colors";
+import {victoryTheme} from "../../utils/theme";
 
 const chartData = knittingData.knitting;
 

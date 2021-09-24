@@ -5,8 +5,8 @@ import {
   VictoryTooltip,
   VictoryVoronoiContainer,
 } from "victory";
-import householdIncomeData from "../public/data/household-income-by-state.json";
-import {victoryTheme} from "../utils/theme";
+import householdIncomeData from "../../public/data/household-income-by-state.json";
+import {victoryTheme} from "../../utils/theme";
 
 const PopularityVsMedianIncome = ({
   data = [],
