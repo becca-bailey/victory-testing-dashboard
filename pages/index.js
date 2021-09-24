@@ -1,24 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import PopularityByRegion from "../components/popularity-by-region";
-import PopularityOverTime from "../components/popularity-over-time";
-import PopularityVsMedianIncome from "../components/popularity-vs-median-income";
-import PopularityVsSheep from "../components/popularity-vs-sheep-per-capita";
+import {
+  PopularityByRegion,
+  PopularityOverTime,
+  PopularityOverTimeBar,
+  PopularityVsMedianIncome,
+  PopularityVsSheep,
+} from "../components/dashboard-v1";
 import hobbiesData from "../public/data/all-hobbies-over-time-us.json";
 import bakingData from "../public/data/baking-by-country.json";
+import bakingByStateData from "../public/data/baking-by-state.json";
 import britishBakingData from "../public/data/british-baking.json";
+import craftingData2020 from "../public/data/crafting-2020.json";
 import crochetData from "../public/data/crochet-by-country.json";
+import crochetByStateData from "../public/data/crochet-by-state.json";
 import gardeningData from "../public/data/gardening-by-country.json";
+import gardeningByStateData from "../public/data/gardening-by-state.json";
 import knittingData from "../public/data/knitting-by-country.json";
 import knittingByStateData from "../public/data/knitting-by-state.json";
 import sewingData from "../public/data/sewing-by-country.json";
-import crochetByStateData from "../public/data/crochet-by-state.json";
-import {getColorAtIndex} from "../utils/colors";
-import gardeningByStateData from "../public/data/gardening-by-state.json";
 import sewingByStateData from "../public/data/sewing-by-state.json";
-import bakingByStateData from "../public/data/baking-by-state.json";
-import PopularityOverTimeBar from "../components/popularity-over-time-bar";
-import craftingData2020 from "../public/data/crafting-2020.json";
+import {getColorAtIndex} from "../utils/colors";
 
 const Main = styled.main`
   padding: 2rem;

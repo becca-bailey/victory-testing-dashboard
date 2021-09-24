@@ -6,7 +6,7 @@ import {
   VictoryTooltip,
   VictoryVoronoiContainer,
 } from "victory";
-import {victoryTheme} from "../utils/theme";
+import {victoryTheme} from "../../utils/theme";
 
 const PopularityByRegion = ({
   data = [],
