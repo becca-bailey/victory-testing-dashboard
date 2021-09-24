@@ -231,16 +231,16 @@ const PopulationCanvas = ({
   }, [data, isolatedCountry]);
 
   const flattenedData = React.useMemo(() => {
-    return data.reduce((all, {country, values}) => {
+    return filteredData.reduce((all, {country, values}) => {
       return [...all, ...values.map((v) => ({...v, country}))];
     }, []);
-  }, [data]);
+  }, [filteredData]);
 
   const getColor = React.useCallback(
     (values) => {
       const colorScale = d3
         .scaleSequential()
-        .domain([0, d3.max(flattenedData, (d) => d.value)])
+        .domain(d3.extent(flattenedData, (d) => d.value))
         .interpolator(d3.interpolateRainbow);
 
       const mean = d3.mean(values.map(({value}) => value));
