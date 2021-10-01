@@ -23,7 +23,7 @@ function drawPoint(ctx, {x, y, color}) {
   ctx.fill();
 }
 
-const drawBrushLine = (ctx, {x, y1, y2}) => {
+const drawCursorLine = (ctx, {x, y1, y2}) => {
   ctx.strokeStyle = lineColor;
   ctx.lineWidth = 2;
   ctx.beginPath();
@@ -61,15 +61,16 @@ addEventListener("message", (event) => {
   if (!!nextData && !!ctx) {
     const interpolator = d3Interpolate.interpolate(previousData, nextData);
     const timer = d3Timer.timer((elapsed) => {
-      const step = duration ? elapsed / duration : 1;
       if (elapsed > duration) {
         timer.stop();
       }
+      const step = elapsed / duration;
       const data = interpolator(step);
+
       clear(ctx, width, height);
       const x = get(Object.values(data), "[0][0].x");
       if (x) {
-        drawBrushLine(ctx, {x, y1: margin.top, y2: height - margin.bottom});
+        drawCursorLine(ctx, {x, y1: margin.top, y2: height - margin.bottom});
       }
       drawPoints(ctx, data);
     });

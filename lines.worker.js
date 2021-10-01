@@ -47,10 +47,11 @@ addEventListener("message", (event) => {
   if (!!nextData && !!ctx) {
     const interpolator = d3Interpolate.interpolate(previousData, nextData);
     const timer = d3Timer.timer((elapsed) => {
-      const step = duration ? elapsed / duration : 1;
       if (elapsed > duration) {
         timer.stop();
       }
+      const step = elapsed / duration;
+
       clear(ctx, width, height);
       drawLines(ctx, interpolator(step));
     });
