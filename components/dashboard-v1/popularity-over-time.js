@@ -6,6 +6,8 @@ import {
   VictoryTooltip,
   VictoryVoronoiContainer,
   VictoryGroup,
+  CanvasContainer,
+  CanvasCurve,
 } from "victory";
 import {getColorAtIndex} from "../../utils/colors";
 import {victoryTheme} from "../../utils/theme";
@@ -37,11 +39,13 @@ const PopularityOverTime = ({data, animate = false}) => {
   return (
     <VictoryChart
       theme={victoryTheme}
+      height={600}
+      width={900}
       containerComponent={
         <VictoryVoronoiContainer
           voronoiDimension="x"
-          labels={({datum}) => [`${datum.hobby}: ${datum.y}`]}
           labelComponent={<CustomTooltip />}
+          labels={({datum}) => [`${datum.hobby}: ${datum.y}`]}
         />
       }
     >
@@ -51,7 +55,9 @@ const PopularityOverTime = ({data, animate = false}) => {
             <VictoryLine
               key={id}
               data={coordinates}
-              style={{data: {stroke: color}}}
+              style={{data: {stroke: color, strokeWidth: 4}}}
+              groupComponent={<CanvasContainer />}
+              dataComponent={<CanvasCurve />}
             />
           );
         })}

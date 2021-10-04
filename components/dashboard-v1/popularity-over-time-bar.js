@@ -6,6 +6,8 @@ import {
   VictoryTooltip,
   VictoryVoronoiContainer,
   VictoryBar,
+  CanvasContainer,
+  CanvasBar,
 } from "victory";
 import {colorPalette} from "../../utils/colors";
 import {victoryTheme} from "../../utils/theme";
@@ -37,6 +39,8 @@ const PopularityOverTimeBar = ({data, animate = false}) => {
       <VictoryChart
         animate={animate}
         theme={victoryTheme}
+        height={600}
+        width={900}
         containerComponent={
           <VictoryVoronoiContainer
             labels={({datum}) => `${datum.hobby}: ${datum.y}`}
@@ -46,7 +50,14 @@ const PopularityOverTimeBar = ({data, animate = false}) => {
       >
         <VictoryStack colorScale={colorPalette}>
           {victoryData.map(({coordinates}, i) => {
-            return <VictoryBar key={i} data={coordinates} />;
+            return (
+              <VictoryBar
+                key={i}
+                data={coordinates}
+                groupComponent={<CanvasContainer />}
+                dataComponent={<CanvasBar />}
+              />
+            );
           })}
         </VictoryStack>
       </VictoryChart>

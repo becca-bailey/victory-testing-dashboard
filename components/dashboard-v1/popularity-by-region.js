@@ -5,6 +5,8 @@ import {
   VictoryChart,
   VictoryTooltip,
   VictoryVoronoiContainer,
+  CanvasContainer,
+  CanvasBar,
 } from "victory";
 import {victoryTheme} from "../../utils/theme";
 
@@ -31,6 +33,8 @@ const PopularityByRegion = ({
         theme={victoryTheme}
         animate={animate}
         containerComponent={<VictoryVoronoiContainer />}
+        height={450}
+        width={675}
       >
         <VictoryBar
           style={{data: {fill: color}}}
@@ -39,6 +43,8 @@ const PopularityByRegion = ({
             return `${datum.x}: ${datum.y}`;
           }}
           labelComponent={<VictoryTooltip />}
+          groupComponent={<CanvasContainer />}
+          dataComponent={<CanvasBar />}
         />
         <VictoryAxis dependentAxis />
       </VictoryChart>

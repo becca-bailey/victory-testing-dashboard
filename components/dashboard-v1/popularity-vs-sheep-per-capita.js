@@ -4,6 +4,8 @@ import {
   VictoryScatter,
   VictoryTooltip,
   VictoryVoronoiContainer,
+  CanvasContainer,
+  CanvasPoint,
 } from "victory";
 import knittingData from "../../public/data/knitting-by-country.json";
 import populationData from "../../public/data/2019-population-json.json";
@@ -38,6 +40,8 @@ const KnittingPopularityVsSheepPerCapita = ({
         theme={victoryTheme}
         animate={animate}
         containerComponent={<VictoryVoronoiContainer />}
+        height={450}
+        width={675}
       >
         <VictoryScatter
           style={{data: {fill: getColorAtIndex(1)}}}
@@ -46,6 +50,8 @@ const KnittingPopularityVsSheepPerCapita = ({
             return datum.country;
           }}
           labelComponent={<VictoryTooltip />}
+          groupComponent={<CanvasContainer />}
+          dataComponent={<CanvasPoint />}
         />
       </VictoryChart>
     </div>

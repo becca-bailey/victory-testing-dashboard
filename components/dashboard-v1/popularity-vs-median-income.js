@@ -4,6 +4,8 @@ import {
   VictoryScatter,
   VictoryTooltip,
   VictoryVoronoiContainer,
+  CanvasContainer,
+  CanvasPoint,
 } from "victory";
 import householdIncomeData from "../../public/data/household-income-by-state.json";
 import {victoryTheme} from "../../utils/theme";
@@ -36,6 +38,8 @@ const PopularityVsMedianIncome = ({
         theme={victoryTheme}
         animate={animate}
         containerComponent={<VictoryVoronoiContainer />}
+        height={450}
+        width={675}
       >
         <VictoryScatter
           style={{data: {fill: color}}}
@@ -44,6 +48,8 @@ const PopularityVsMedianIncome = ({
             return datum.state;
           }}
           labelComponent={<VictoryTooltip />}
+          groupComponent={<CanvasContainer />}
+          dataComponent={<CanvasPoint />}
         />
       </VictoryChart>
     </div>

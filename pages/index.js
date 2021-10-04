@@ -50,7 +50,7 @@ const SplitSection = styled(Grid)`
   grid-template-columns: repeat(2, 1fr);
 `;
 
-const animate = true;
+const animate = false;
 
 export default function Home() {
   return (
