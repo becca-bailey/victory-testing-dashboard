@@ -5,7 +5,7 @@ import {
   VictoryChart,
   VictoryTooltip,
   VictoryVoronoiContainer,
-  CanvasContainer,
+  CanvasGroup,
   CanvasBar,
 } from "victory";
 import {victoryTheme} from "../../utils/theme";
@@ -16,6 +16,7 @@ const PopularityByRegion = ({
   hobby,
   region = "country",
   animate = false,
+  canvas = false,
 }) => {
   const victoryData = React.useMemo(() => {
     return data.map((d) => {
@@ -43,8 +44,8 @@ const PopularityByRegion = ({
             return `${datum.x}: ${datum.y}`;
           }}
           labelComponent={<VictoryTooltip />}
-          groupComponent={<CanvasContainer />}
-          dataComponent={<CanvasBar />}
+          groupComponent={canvas ? <CanvasGroup /> : undefined}
+          dataComponent={canvas ? <CanvasBar /> : undefined}
         />
         <VictoryAxis dependentAxis />
       </VictoryChart>

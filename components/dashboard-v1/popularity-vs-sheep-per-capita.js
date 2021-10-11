@@ -4,7 +4,7 @@ import {
   VictoryScatter,
   VictoryTooltip,
   VictoryVoronoiContainer,
-  CanvasContainer,
+  CanvasGroup,
   CanvasPoint,
 } from "victory";
 import knittingData from "../../public/data/knitting-by-country.json";
@@ -17,6 +17,7 @@ const chartData = knittingData.knitting;
 const KnittingPopularityVsSheepPerCapita = ({
   data = chartData,
   animate = false,
+  canvas = false,
 }) => {
   const victoryData = React.useMemo(() => {
     return data
@@ -50,8 +51,8 @@ const KnittingPopularityVsSheepPerCapita = ({
             return datum.country;
           }}
           labelComponent={<VictoryTooltip />}
-          groupComponent={<CanvasContainer />}
-          dataComponent={<CanvasPoint />}
+          groupComponent={canvas ? <CanvasGroup /> : undefined}
+          dataComponent={canvas ? <CanvasPoint /> : undefined}
         />
       </VictoryChart>
     </div>

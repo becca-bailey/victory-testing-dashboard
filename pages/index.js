@@ -50,7 +50,8 @@ const SplitSection = styled(Grid)`
   grid-template-columns: repeat(2, 1fr);
 `;
 
-const animate = false;
+const animate = true;
+const canvas = true;
 
 export default function Home() {
   return (
@@ -60,7 +61,11 @@ export default function Home() {
         world?
       </h1>
       <LeftSection>
-        <PopularityOverTime data={hobbiesData} animate={animate} />
+        <PopularityOverTime
+          data={hobbiesData}
+          animate={animate}
+          canvas={canvas}
+        />
         <p>
           Hobbies like knitting, sewing, baking, and gardening were popular
           during the pandemic. According to Google search data, some are more
@@ -72,7 +77,11 @@ export default function Home() {
           If we zoom in on 2020 and stack each hobby, we can see the impact of
           the pandemic on Google searches in March of 2020.
         </p>
-        <PopularityOverTimeBar data={craftingData2020} animate={animate} />
+        <PopularityOverTimeBar
+          data={craftingData2020}
+          animate={animate}
+          canvas={canvas}
+        />
       </RightSection>
       <Section>
         <h2>Where in the world are each of these hobbies the most popular?</h2>
@@ -82,6 +91,7 @@ export default function Home() {
             color={getColorAtIndex(0)}
             hobby="knitting"
             animate={animate}
+            canvas={canvas}
           />
           <p>
             Knitting is really popular in Iceland and New Zealand. It makes
@@ -95,6 +105,7 @@ export default function Home() {
             color={getColorAtIndex(1)}
             hobby="crochet"
             animate={animate}
+            canvas={canvas}
           />
           <p>
             Crochet is popular in South American countries like Bolivia, Chile,
@@ -107,6 +118,7 @@ export default function Home() {
             color={getColorAtIndex(2)}
             hobby="sewing"
             animate={animate}
+            canvas={canvas}
           />
           <p>
             Sewing is popular in many countries around the world, including the
@@ -121,6 +133,7 @@ export default function Home() {
             color={getColorAtIndex(3)}
             hobby="baking"
             animate={animate}
+            canvas={canvas}
           />
           <p>
             The top five countries that are searching for baking on Google are
@@ -134,6 +147,7 @@ export default function Home() {
             color={getColorAtIndex(4)}
             hobby="gardening"
             animate={animate}
+            canvas={canvas}
           />
           <p>
             Many of the countries on the list have good climates for gardening,
@@ -154,6 +168,7 @@ export default function Home() {
             hobby="knitting"
             region="state"
             animate={animate}
+            canvas={canvas}
           />
         </SplitSection>
         <p>
@@ -168,12 +183,14 @@ export default function Home() {
             data={knittingByStateData.knitting}
             hobby="knitting"
             animate={animate}
+            canvas={canvas}
           />
           <PopularityVsMedianIncome
             color={getColorAtIndex(4)}
             data={bakingByStateData.baking}
             hobby="baking"
             animate={animate}
+            canvas={canvas}
           />
         </SplitSection>
         <SplitSection>
@@ -182,6 +199,7 @@ export default function Home() {
             data={crochetByStateData.crochet}
             hobby="crochet"
             animate={animate}
+            canvas={canvas}
           />
           <p>Interestingly—crochet seems to go in the opposite direction.</p>
         </SplitSection>
@@ -192,12 +210,14 @@ export default function Home() {
             data={gardeningByStateData.gardening}
             hobby="gardening"
             animate={animate}
+            canvas={canvas}
           />
           <PopularityVsMedianIncome
             color={getColorAtIndex(3)}
             data={sewingByStateData.sewing}
             hobby="sewing"
             animate={animate}
+            canvas={canvas}
           />
         </SplitSection>
       </Section>

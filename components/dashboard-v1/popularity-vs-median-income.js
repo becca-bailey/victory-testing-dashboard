@@ -4,7 +4,7 @@ import {
   VictoryScatter,
   VictoryTooltip,
   VictoryVoronoiContainer,
-  CanvasContainer,
+  CanvasGroup,
   CanvasPoint,
 } from "victory";
 import householdIncomeData from "../../public/data/household-income-by-state.json";
@@ -15,6 +15,7 @@ const PopularityVsMedianIncome = ({
   color,
   hobby,
   animate = false,
+  canvas = false,
 }) => {
   const victoryData = React.useMemo(() => {
     return data
@@ -48,8 +49,8 @@ const PopularityVsMedianIncome = ({
             return datum.state;
           }}
           labelComponent={<VictoryTooltip />}
-          groupComponent={<CanvasContainer />}
-          dataComponent={<CanvasPoint />}
+          groupComponent={canvas ? <CanvasGroup /> : undefined}
+          dataComponent={canvas ? <CanvasPoint /> : undefined}
         />
       </VictoryChart>
     </div>

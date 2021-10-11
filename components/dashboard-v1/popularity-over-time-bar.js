@@ -6,7 +6,7 @@ import {
   VictoryTooltip,
   VictoryVoronoiContainer,
   VictoryBar,
-  CanvasContainer,
+  CanvasGroup,
   CanvasBar,
 } from "victory";
 import {colorPalette} from "../../utils/colors";
@@ -18,7 +18,7 @@ function CustomTooltip({text, datum, ...rest}) {
   return <VictoryTooltip datum={datum} text={modifiedText} {...rest} />;
 }
 
-const PopularityOverTimeBar = ({data, animate = false}) => {
+const PopularityOverTimeBar = ({data, animate = false, canvas = false}) => {
   const victoryData = React.useMemo(() => {
     return Object.entries(data).map(([hobby, values], i) => {
       const coordinates = values.map(({week, popularity}) => {
@@ -54,8 +54,8 @@ const PopularityOverTimeBar = ({data, animate = false}) => {
               <VictoryBar
                 key={i}
                 data={coordinates}
-                groupComponent={<CanvasContainer />}
-                dataComponent={<CanvasBar />}
+                groupComponent={canvas ? <CanvasGroup /> : undefined}
+                dataComponent={canvas ? <CanvasBar /> : undefined}
               />
             );
           })}
