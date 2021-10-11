@@ -18,10 +18,10 @@
     "date-fns": "^2.23.0",
     "eslint": "^7.32.0",
     "next": "11.1.2",
-    "react": "file:../victory/node_modules/react",
-    "react-dom": "file:../victory/node_modules/react-dom",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "styled-components": "^5.3.1",
-    "victory": "file:../victory/packages/victory"
+    "victory": "^36.0.1"
   },
   "devDependencies": {
     "eslint-config-next": "11.1.2",
