@@ -1,3 +1,4 @@
+import {useRouter} from "next/dist/client/router";
 import React from "react";
 import styled from "styled-components";
 import {
@@ -21,6 +22,7 @@ import knittingByStateData from "../public/data/knitting-by-state.json";
 import sewingData from "../public/data/sewing-by-country.json";
 import sewingByStateData from "../public/data/sewing-by-state.json";
 import {getColorAtIndex} from "../utils/colors";
+import {parseStringBoolean} from "../utils/parsers";
 
 const Main = styled.main`
   padding: 2rem;
@@ -50,10 +52,11 @@ const SplitSection = styled(Grid)`
   grid-template-columns: repeat(2, 1fr);
 `;
 
-const animate = true;
-const canvas = true;
-
 export default function Home() {
+  const {query} = useRouter();
+  const animate = parseStringBoolean(query.animate);
+  const canvas = parseStringBoolean(query.canvas);
+
   return (
     <Main>
       <h1>
