@@ -5,7 +5,7 @@ export const victoryTheme = {
   tooltip: {
     style: {
       ...VictoryTheme.grayscale.tooltip.style,
-      fontFamily: "Urbanist, sans-serif",
+      fontFamily: "Castledown, sans-serif",
       padding: 10,
     },
   },
@@ -14,7 +14,7 @@ export const victoryTheme = {
       ...VictoryTheme.grayscale.axis.style,
       tickLabels: {
         padding: 8,
-        font: "Urbanist, sans-serif",
+        font: "Castledown, sans-serif",
         fontWeight: 100,
       },
     },

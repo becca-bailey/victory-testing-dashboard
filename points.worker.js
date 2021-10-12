@@ -2,11 +2,11 @@ import get from "lodash/get";
 import * as d3Timer from "d3-timer";
 import * as d3Interpolate from "d3-interpolate";
 
-const defaultWidth = 800;
+const defaultWidth = 1000;
 const defaultHeight = 600;
 const defaultMargin = {
   left: 70,
-  right: 20,
+  right: 70,
   top: 20,
   bottom: 70,
 };

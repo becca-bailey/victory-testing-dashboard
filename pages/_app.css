@@ -21,11 +21,12 @@ h4,
 h5 {
   font-family: Castledown, sans-serif;
   color: #485460;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 3rem;
+  line-height: 3.5rem;
 }
 
 h2 {
@@ -46,6 +47,10 @@ p {
 ol,
 ul,
 a {
+  font-family: Castledown, sans-serif;
+}
+
+text {
   font-family: Castledown, sans-serif;
 }
 

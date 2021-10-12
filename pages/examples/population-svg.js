@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import get from "lodash/get";
 import React from "react";
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {Tooltip} from "../../components/svg/Tooltip";
 import {XAxis} from "../../components/svg/XAxis";
 import {YAxis} from "../../components/svg/YAxis";
@@ -11,6 +11,19 @@ const populationData = jsonData.populationData.map(({country, values}) => ({
   country,
   values: values.filter(({value}) => !!value),
 }));
+
+const defaultWidth = 1000;
+const defaultHeight = 600;
+const defaultMargin = {
+  left: 70,
+  right: 70,
+  top: 20,
+  bottom: 70,
+};
+const defaultLineWidth = 2;
+const defaultPointSize = 3.5;
+const animationDuration = 200;
+const lineColor = "#D1DCE5";
 
 const Main = styled.main``;
 
@@ -22,21 +35,19 @@ const Intro = styled.section`
 const Title = styled.h1``;
 
 const Text = styled.text`
-  font-family: Urbanist, sans-serif;
+  font-family: Castledown, sans-serif;
 `;
 
-const defaultWidth = 800;
-const defaultHeight = 600;
-const defaultMargin = {
-  left: 70,
-  right: 20,
-  top: 20,
-  bottom: 70,
-};
-const defaultLineWidth = 2;
-const defaultPointSize = 3.5;
-const animationDuration = 200;
-const lineColor = "#D1DCE5";
+const Container = styled.div`
+  max-width: ${css`
+    ${defaultWidth + defaultMargin.left + defaultMargin.right}px
+  `};
+  height: ${css`
+    ${defaultHeight + defaultMargin.top + defaultMargin.bottom}px
+  `};
+  margin: 0 auto;
+  position: relative;
+`;
 
 const usePreviousData = (data, defaultValue = {}) => {
   const ref = React.useRef();
@@ -327,54 +338,56 @@ const PopulationSVG = ({
         </p>
       </Intro>
 
-      <svg
-        className="chart"
-        height={height}
-        width={width}
-        transform={`translate(${margin.left}, ${margin.top})`}
-        onMouseMove={onMouseMove}
-        onMouseLeave={onMouseLeave}
-        onClick={handleClick}
-      >
-        <Text
-          x={(height / 2 - margin.top / 2) * -1}
-          dy={15}
-          transform="rotate(-90)"
-          textAnchor="middle"
-        >
-          Population
-        </Text>
-        <Text
-          x={width / 2 + margin.left / 2}
-          y={height - 10}
-          textAnchor="middle"
-        >
-          Year
-        </Text>
-        <XAxis scale={scaleX} margin={margin} height={height} />
-        <YAxis scale={scaleY} margin={margin} />
-        <Lines
-          nextData={nextLineData}
-          previousData={previousLineData}
-          width={width}
+      <Container>
+        <svg
+          className="chart"
           height={height}
-          margin={margin}
-        />
-        <Points
-          nextData={nextPointsData}
-          previousData={previousPointsData}
           width={width}
-          height={height}
-          margin={margin}
-          activePoint={
-            activePoint && {
-              ...activePoint,
-              x: scaleX(activePoint.year),
-              y: scaleY(activePoint.value),
+          transform={`translate(${margin.left}, ${margin.top})`}
+          onMouseMove={onMouseMove}
+          onMouseLeave={onMouseLeave}
+          onClick={handleClick}
+        >
+          <Text
+            x={(height / 2 - margin.top / 2) * -1}
+            dy={15}
+            transform="rotate(-90)"
+            textAnchor="middle"
+          >
+            Population
+          </Text>
+          <Text
+            x={width / 2 + margin.left / 2}
+            y={height - 10}
+            textAnchor="middle"
+          >
+            Year
+          </Text>
+          <XAxis scale={scaleX} margin={margin} height={height} />
+          <YAxis scale={scaleY} margin={margin} />
+          <Lines
+            nextData={nextLineData}
+            previousData={previousLineData}
+            width={width}
+            height={height}
+            margin={margin}
+          />
+          <Points
+            nextData={nextPointsData}
+            previousData={previousPointsData}
+            width={width}
+            height={height}
+            margin={margin}
+            activePoint={
+              activePoint && {
+                ...activePoint,
+                x: scaleX(activePoint.year),
+                y: scaleY(activePoint.value),
+              }
             }
-          }
-        />
-      </svg>
+          />
+        </svg>
+      </Container>
     </Main>
   );
 };

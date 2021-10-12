@@ -36,7 +36,7 @@ const Section = styled.section`
 
 const Grid = styled.div`
   display: grid;
-  grid-gap: 2rem;
+  grid-gap: 3rem;
   align-items: center;
 `;
 

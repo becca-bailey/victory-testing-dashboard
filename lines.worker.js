@@ -1,7 +1,7 @@
 import * as d3Timer from "d3-timer";
 import * as d3Interpolate from "d3-interpolate";
 
-const defaultWidth = 800;
+const defaultWidth = 1000;
 const defaultHeight = 600;
 const lineWidth = 2;
 const duration = 250;
