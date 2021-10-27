@@ -1,4 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Victory Testing Dashboard
+
+This is an example project built with [Next.js](https://nextjs.org) used to test Victory with different rendering methods and amounts of data. Right now, it contains a data dashboard at the root, and a series of non-Victory examples. Each page is configured to use query params for configuration.
+
+This app is deployed at https://victory-testing-dashboard.netlify.app/.
+
+Example query params:
+
+- `animate` - true/false, corresponds to Victory's animate prop
+- `canvas` - true/false, enables VictoryCanvas components rather than SVG.
+
+## Examples
+
+- [SVG](https://victory-testing-dashboard.netlify.app/examples/population-svg)
+- [Canvas](https://victory-testing-dashboard.netlify.app/examples/population-canvas)
+- [Canvas + OffscreenCanvas](https://victory-testing-dashboard.netlify.app/examples/population-offscreen-canvas)
+
+Check out [this blog post](https://formidable.com/blog/2021/data-viz-1/) to learn more!
 
 ## Getting Started
 
@@ -6,25 +23,6 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
